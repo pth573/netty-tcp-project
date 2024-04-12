@@ -1,4 +1,4 @@
-package com.example.demonetty.server;
+package com.example.demonetty.server;//package com.example.demonetty.server;
 import com.example.demonetty.entity.T1;
 import com.example.demonetty.service.T1Service;
 import io.netty.buffer.ByteBuf;
@@ -33,20 +33,35 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
         channels.remove(ctx.channel());
     }
 
+
+    //       Handler received message in here
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
         System.out.println("Received message from client " + ctx.channel().remoteAddress() + ": " + msg);
+
+
         String tmp = msg;
-        Scanner sc = new Scanner(System.in);
-        String messageToClient = sc.nextLine();
-        ByteBuf buf = Unpooled.copiedBuffer(messageToClient.getBytes());
-        System.out.println("Message sent to client: " + messageToClient);
-        ctx.channel().writeAndFlush(buf);
+
+//        You can uncomment this code to send message to Client using String
+
+//        Scanner sc = new Scanner(System.in);
+//        String messageToClient = sc.nextLine();
+//        ByteBuf buf = Unpooled.copiedBuffer(messageToClient.getBytes());
+//        System.out.println("Message sent to client: " + messageToClient);
+//        ctx.channel().writeAndFlush(buf);
+
+
+        // This is my String Handler and save to database
+        
         try{
             String[] dataParts = msg.split("\\}\\{");
             for(String part : dataParts){
                 part = part.replaceAll("^\\{|\\}$", "");
                 String[] messageList = part.split(",");
+                if (messageList.length < 10) {
+                    throw new Exception("Khong phai T1");
+                }
+
                 int i = 0;
                 T1 t1 = new T1();
                 if(i < messageList.length){
@@ -69,3 +84,4 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
         }
     }
 }
+

@@ -16,14 +16,19 @@ public class ClientMain {
             Client client = new Client("127.0.0.1", 8888);
             ChannelFuture channelFuture = client.startup();
             System.out.println("New Client is created");
-            readTxt(channelFuture, client);
-//            readFile(channelFuture, client);
+//            Can read String by uncomment readTxt and comment readFile
+//            If you read String, can read continuously
+
+//            readTxt(channelFuture, client);
+            readFile(channelFuture, client);
         }
         catch(Exception e){
             e.printStackTrace();
             System.out.println("Error occurred");
         }
     }
+
+
     public static void readTxt(ChannelFuture channelFuture, Client client){
         while (true){
             if (channelFuture.isSuccess()){
@@ -52,7 +57,8 @@ public class ClientMain {
 
     public static void readFile(ChannelFuture channelFuture, Client client) throws FileNotFoundException {
         if (channelFuture.isSuccess()) {
-            Scanner sc = new Scanner(new File("D:\\Thuc tap\\netty - last\\demonetty\\src\\main\\java\\com\\example\\demonetty\\data.txt"));
+//            Using path File of you
+            Scanner sc = new Scanner(new File("D:\\Thuc tap\\netty_project_last\\demonetty\\src\\main\\resources\\data.txt"));
             while (sc.hasNextLine()) {
                 String message = sc.nextLine();
                 Channel channel = client.getChannel();
