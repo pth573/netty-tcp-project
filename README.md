@@ -1,5 +1,5 @@
 
-#Chat TCP using netty framework Can chat TCP continuously
+# Chat TCP using netty framework Can chat TCP continuously
 
 * 1) Run Entry.class
   2) Run ClientMain.class
